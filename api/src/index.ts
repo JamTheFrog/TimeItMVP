@@ -6,6 +6,9 @@ import mongoose from "mongoose";
 //keys
 import keys from "./config/keys";
 
+//errors
+import { NotFoundError } from "./errors/not-found-error";
+import { errorHandler } from "./middlewares/error-handler";
 
 const app = express();
 app.set("trust proxy", true);
@@ -28,9 +31,10 @@ app.use(cors(corsOptions));
 
 app.get("/health", (req, res) => res.status(200).send());
 app.all("*", () => {
-  // throw new NotFoundError();
+  throw new NotFoundError();
 });
 
+app.use(errorHandler);
 
 const start = async () => {
   try {
