@@ -10,6 +10,16 @@ import keys from "./config/keys";
 import { NotFoundError } from "./errors/not-found-error";
 import { errorHandler } from "./middlewares/error-handler";
 
+
+//auth related route imports
+import { currentUserRouter } from "./routes/auth/current-user";
+import { signupRouter } from "./routes/auth/signup";
+import { signinRouter } from "./routes/auth/signin";
+import { signoutRouter } from "./routes/auth/signout";
+
+import { currentUser } from "./middlewares/current-user";
+
+
 const app = express();
 app.set("trust proxy", true);
 app.use(express.json());
@@ -27,7 +37,13 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(currentUser);
 
+//auth related routes
+app.use(currentUserRouter);
+app.use(signupRouter);
+app.use(signinRouter);
+app.use(signoutRouter);
 
 app.get("/health", (req, res) => res.status(200).send());
 app.all("*", () => {
