@@ -2,7 +2,6 @@ import React from "react";
 import Card from "../../shared/UIElements/Card";
 
 function SessionItem({ session }) {
-  console.log(session);
   return (
     <Card>
       <h1 className="text-primary font-semibold font-primaryFont text-xl mb-2">
