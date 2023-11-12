@@ -15,7 +15,7 @@ const NavLinks = ({ closeNavLinks }) => {
     },
     currentUser && {
       label: "My sessions",
-      href: "/mysessions",
+      href: "/ownersessions",
     },
     !currentUser && { label: "Sign up", href: "/auth/signup" },
     !currentUser && { label: "Sign in", href: "/auth/signin" },

@@ -8,6 +8,10 @@ import MainNavigation from "./shared/Layout/Navigation/MainNavigation/MainNaviga
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getCurrentUser } from "./store/actions/auth-actions";
+import CreateSession from "./pages/sessions/CreateSession";
+import OwnerSessions from "./pages/sessions/OwnerSessions";
+import SessionDetail from "./pages/sessions/SessionDetail";
+import Sessions from "./pages/sessions/Sessions";
 
 function App() {
   const token = useSelector((state) => state.auth.token);
@@ -33,6 +37,19 @@ function App() {
           </Route>
           <Route exact path="/auth/signout">
             <Signout />
+          </Route>
+          {/* SESSIONS ROUTES */}
+          <Route exact path="/sessions">
+            <Sessions />
+          </Route>
+          <Route exact path="/sessions/:sessionid">
+            <SessionDetail />
+          </Route>
+          <Route exact path="/ownersessions">
+            <OwnerSessions />
+          </Route>
+          <Route exact path="/createsession">
+            <CreateSession />
           </Route>
           {/* ERROR ROUTES */}
           <Route path="*">
