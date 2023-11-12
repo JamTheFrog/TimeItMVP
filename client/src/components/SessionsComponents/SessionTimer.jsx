@@ -7,6 +7,7 @@ function SessionTimer({ timeBlocks }) {
   const [seconds, setSeconds] = useState(
     timeBlocks.length > 0 ? timeBlocks[0].duration : 0
   );
+  const [isRunning, setIsRunning] = useState(true);
 
   const formatTime = (timeInSeconds) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -15,16 +16,26 @@ function SessionTimer({ timeBlocks }) {
     return `${hours}h ${minutes}m ${remainingSeconds}s`;
   };
 
-  useEffect(() => {
-    // Exit the effect if all time blocks are completed or no time blocks are provided
-    if (activeIndex >= timeBlocks.length || timeBlocks.length === 0) return;
+  const handleStop = () => {
+    setIsRunning(false);
+  };
 
-    // Update the countdown every second
+  const handleStart = () => {
+    setIsRunning(true);
+  };
+
+  useEffect(() => {
+    if (
+      activeIndex >= timeBlocks.length ||
+      timeBlocks.length === 0 ||
+      !isRunning
+    )
+      return;
+
     const intervalId = setInterval(() => {
       setSeconds((prevSeconds) => prevSeconds - 1);
     }, 1000);
 
-    // Move to the next time block when the current one reaches 0
     if (seconds === 0) {
       setActiveIndex((prevIndex) => {
         // Check if there is a next time block before accessing its properties
@@ -34,15 +45,15 @@ function SessionTimer({ timeBlocks }) {
         } else {
           // No more time blocks, reset seconds and clear interval
           setSeconds(0);
+          setIsRunning(false);
           clearInterval(intervalId);
           return prevIndex;
         }
       });
     }
 
-    // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, [activeIndex, seconds, timeBlocks]);
+  }, [activeIndex, seconds, timeBlocks, isRunning]);
 
   if (timeBlocks.length === 0) {
     return <div>No time blocks available.</div>;
@@ -58,7 +69,7 @@ function SessionTimer({ timeBlocks }) {
       {timeBlocks.map((block, index) => (
         <Card
           key={block.id}
-          className={`${index === activeIndex ? "bg-primary " : "white"} mb-4`}
+          className={`${index === activeIndex ? "bg-emerald-500" : "white"} mb-4`}
         >
           <p
             className={`${
@@ -76,14 +87,27 @@ function SessionTimer({ timeBlocks }) {
           </p>
         </Card>
       ))}
-      <div>
-        <p className="text-primary text-2xl text-center uppercase font-primaryFont font-semibold mb-4 mt-16">
+      <div className="flex flex-col items-center">
+        <p className="text-primary text-2xl  uppercase font-primaryFont font-semibold mb-4 mt-16">
           Duration: {formatTime(seconds)}
         </p>
-        <h2 className=" text-center  ">
-          Current Block
-        </h2>
-        <p className=" text-center text-gray-600">
+        {isRunning ? (
+          <button
+            className="text-white mb-4  flex items-center gap-2 bg-primary hover:bg-primaryDark focus:ring-4 focus:outline-none focus:ring-primaryLight font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+            onClick={handleStop}
+          >
+            Stop Timer
+          </button>
+        ) : (
+          <button
+            className="text-white  mb-4 flex items-center gap-2 bg-primary hover:bg-primaryDark focus:ring-4 focus:outline-none focus:ring-primaryLight font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+            onClick={handleStart}
+          >
+            Start Timer
+          </button>
+        )}
+        <h2 className="text-lg">Current Block</h2>
+        <p className="text-lg text-center text-gray-600">
           Title: {currentBlock.title}
         </p>
       </div>
