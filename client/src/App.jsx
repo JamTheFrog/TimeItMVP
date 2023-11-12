@@ -5,8 +5,16 @@ import Signin from "./pages/auth/Signin";
 import Signout from "./pages/auth/Signout";
 import NotFound from "./pages/error/NotFound";
 import MainNavigation from "./shared/Layout/Navigation/MainNavigation/MainNavigation";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getCurrentUser } from "./store/actions/auth-actions";
 
 function App() {
+  const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCurrentUser(token));
+  }, [token]);
   return (
     <Router>
       <MainNavigation />
