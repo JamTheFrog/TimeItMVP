@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get(
   "/api/sessions/:sessionid",
-  [check("sessionid").isMongoId().withMessage("Dali ste nam nevažeći ID")],
+  [check("sessionid").isMongoId().withMessage("Invalid ID")],
   validateRequest,
   async (req: Request, res: Response) => {
     const session = await Session.findById(req.params.sessionid);

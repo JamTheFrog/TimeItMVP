@@ -4,11 +4,11 @@ export class NotAuthenticatedError extends CustomError {
   statusCode = 401;
 
   constructor() {
-    super("Niste Autentifikovani");
+    super("Not authenticated");
 
     Object.setPrototypeOf(this, NotAuthenticatedError.prototype);
   }
   serializeErrors() {
-    return [{ message: "Niste autentifikovani" }];
+    return [{ message: "You are not authenticated" }];
   }
 }

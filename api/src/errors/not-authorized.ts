@@ -4,11 +4,11 @@ export class NotAuthorizedError extends CustomError {
   statusCode = 403;
 
   constructor() {
-    super("Niste Autorizovani");
+    super("Not authorized");
 
     Object.setPrototypeOf(this, NotAuthorizedError.prototype);
   }
   serializeErrors() {
-    return [{ message: "Niste autorizovani" }];
+    return [{ message: "You are not authorized for this" }];
   }
 }

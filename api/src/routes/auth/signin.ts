@@ -13,8 +13,8 @@ router.post(
   [
     body("username")
       .notEmpty()
-      .withMessage("Molimo vas unesite tačno korisničko ime"),
-    body("password").trim().notEmpty().withMessage("Molimo vas unesite šifru"),
+      .withMessage("Please enter your username"),
+    body("password").trim().notEmpty().withMessage("Please enter your password"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -23,7 +23,7 @@ router.post(
     const existingUser = await User.findOne({ username });
     if (!existingUser) {
       throw new BadRequestError(
-        "Molimo vas unesite ispravne kredencijale ili kreirajte novi profil"
+        "Please enter valid credentials or create new account"
       );
     }
 
@@ -33,7 +33,7 @@ router.post(
     );
     if (!passwordsMatch) {
       throw new BadRequestError(
-        "Molimo vas unesite ispravne kredencijale ili kreirajte novi profil"
+        "Please enter valid credentials or create new account"
       );
     }
 

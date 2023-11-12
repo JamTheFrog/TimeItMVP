@@ -18,17 +18,17 @@ router.post(
     body("title")
       .not()
       .isEmpty()
-      .withMessage("Molimo vas unesite naziv vaše sesije"),
+      .withMessage("Please enter the title of your time block"),
     body("description")
       .not()
       .isEmpty()
-      .withMessage("Molimo vas unesite opis vaše sesije"),
+      .withMessage("Please enter the description of your time block"),
     body("duration")
       .isFloat({ min: 0, max: 1000000 })
       .withMessage(
-        "Molimo vas unesite trajanje koje je u granici od 1 do 100.000"
+        "Please enter valid duration of your session"
       ),
-    check("sessionid").isMongoId().withMessage("Dali ste nam nevažeći ID"),
+    check("sessionid").isMongoId().withMessage("Invalid ID"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -37,7 +37,7 @@ router.post(
     const existingUser = await User.findById(req.currentUser!.id);
 
     if (!existingUser)
-      throw new BadRequestError("Nismo uspjeli naći vaš profil");
+      throw new BadRequestError("We couldn't find your account");
 
     const existingSession = await Session.findById(req.params.sessionid);
     

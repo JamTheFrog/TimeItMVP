@@ -10,6 +10,6 @@ export class NotFoundError extends CustomError {
   }
 
   serializeErrors() {
-    return [{ message: "Nismo uspjeli naći ono što tražite" }];
+    return [{ message: "We couldn't find what your were looking for" }];
   }
 }

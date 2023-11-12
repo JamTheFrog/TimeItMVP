@@ -14,14 +14,14 @@ router.post(
   [
     body("username")
       .notEmpty()
-      .withMessage("Molimo vas unesite unikatno korisničko ime"),
-    body("email").isEmail().withMessage("Molimo vas unesite validan email"),
-    body("firstName").notEmpty().withMessage("Molimo vas unesite vaše ime"),
-    body("lastName").notEmpty().withMessage("Molimo vas unesite vaše prezime"),
+      .withMessage("Please enter unique username"),
+    body("email").isEmail().withMessage("Please enter valid email"),
+    body("firstName").notEmpty().withMessage("Please enter your name"),
+    body("lastName").notEmpty().withMessage("Please enter your surename"),
     body("password")
       .trim()
       .isLength({ min: 6 })
-      .withMessage("Molimo vas unesite šifru koja ima minimalno 6 karaktera"),
+      .withMessage("Please enter the password with minimum of 6 characters"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -29,13 +29,13 @@ router.post(
       req.body;
 
     if (password !== confirmPassword)
-      throw new BadRequestError("Šifre se ne poklapaju");
+      throw new BadRequestError("Passwords don't match");
 
     const existingUser = await User.findOne({ username });
 
     if (existingUser) {
       throw new BadRequestError(
-        "Korisničko ime je zauzeto, molimo vas unesite unikatno korisničko ime"
+        "Username already exists, please try using another one"
       );
     }
 

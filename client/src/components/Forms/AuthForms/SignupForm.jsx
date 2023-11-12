@@ -37,7 +37,7 @@ const SignupForm = () => {
     <div className="p-4">
       <Card className="max-w-lg mb-20 m-auto">
         <h1 className="text-2xl text-center text-darkHard mb-6 font-medium">
-          Kreirajte novi profil
+          Register new account
         </h1>
         <FormErrors errors={errors} />
         <form onSubmit={signupHandler}>
@@ -50,7 +50,7 @@ const SignupForm = () => {
               onChange={(e) => setEnteredUsername(e.target.value)}
             />
             <label className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-              Korisničko ime
+              Username
             </label>
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
@@ -63,7 +63,7 @@ const SignupForm = () => {
                 onChange={(e) => setEnteredFirstName(e.target.value)}
               />
               <label className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                Ime
+                Name
               </label>
             </div>
             <div className="relative z-0 mb-6 w-full group">
@@ -75,7 +75,7 @@ const SignupForm = () => {
                 onChange={(e) => setEnteredLastName(e.target.value)}
               />
               <label className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                Prezime
+                Surename
               </label>
             </div>
           </div>
@@ -100,7 +100,7 @@ const SignupForm = () => {
               onChange={(e) => setEnteredPassword(e.target.value)}
             />
             <label className="peer-focus:font-medium absolute text-sm text-gray-500  transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-              Šifra
+              Password
             </label>
           </div>
           <div className="relative z-0 mb-6 w-full group">
@@ -112,14 +112,14 @@ const SignupForm = () => {
               onChange={(e) => setEnteredConfirmPassword(e.target.value)}
             />
             <label className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-              Potvrdi šifru
+              Confirm password
             </label>
           </div>
           <button
             type="submit"
             className="text-white bg-primary hover:bg-primaryDark focus:ring-4 focus:outline-none focus:ring-primaryLight font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
           >
-            Kreiraj profil
+            Register
           </button>
         </form>
       </Card>

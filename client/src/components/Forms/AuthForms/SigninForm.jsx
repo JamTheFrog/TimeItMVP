@@ -19,7 +19,7 @@ const SigninForm = () => {
     };
     dispatch(
       postSignin(signinData, (userData) => {
-        history.push("/");
+        history.push("/ownersessions");
       })
     );
   };
@@ -28,7 +28,7 @@ const SigninForm = () => {
     <div className="p-4 mt-24">
       <Card className="max-w-lg my-auto m-auto">
         <h1 className="text-2xl text-center text-darkHard mb-6 font-medium">
-          Prijavite se
+          Sign into your account
         </h1>
         <FormErrors errors={errors} />
         <form onSubmit={signinHandler}>
@@ -41,7 +41,7 @@ const SigninForm = () => {
               onChange={(e) => setEnteredUsername(e.target.value)}
             />
             <label className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-              Korisničko ime
+              Username
             </label>
           </div>
 
@@ -54,21 +54,21 @@ const SigninForm = () => {
               onChange={(e) => setEnteredPassword(e.target.value)}
             />
             <label className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-              Šifra
+              Password
             </label>
           </div>
           <button
             type="submit"
             className="text-white mb-4 bg-primary hover:bg-primaryDark focus:ring-4 focus:outline-none focus:ring-primaryLight font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
           >
-            Prijavi se
+            Sign in
           </button>
           <div>
             <p>
-              Nemam profil još uvijek.{" "}
+              Don't have an account?{" "}
               <Link to="/auth/signup">
                 <span className="font-semibold text-primary">
-                  Kreiraj profil
+                  Create account now
                 </span>
               </Link>
             </p>

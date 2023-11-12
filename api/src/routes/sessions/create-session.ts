@@ -16,11 +16,11 @@ router.post(
     body("name")
       .not()
       .isEmpty()
-      .withMessage("Molimo vas unesite naziv vaše sesije"),
+      .withMessage("Please enter the name of your session"),
     body("description")
       .not()
       .isEmpty()
-      .withMessage("Molimo vas unesite opis vaše sesije"),
+      .withMessage("Please enter the description of your session"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -29,7 +29,7 @@ router.post(
     const existingUser = await User.findById(req.currentUser!.id);
 
     if (!existingUser)
-      throw new BadRequestError("Nismo uspjeli naći vaš profil");
+      throw new BadRequestError("We couldn't find your account");
 
     const session = Session.build({
       name,
