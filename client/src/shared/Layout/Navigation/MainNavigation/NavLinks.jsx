@@ -1,11 +1,25 @@
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 const NavLinks = ({ closeNavLinks }) => {
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const links = [
-    { label: "Početna", href: "/" },
-    { label: "Kreiraj profil", href: "/auth/signup" },
-    { label: "Prijavi se", href: "/auth/signin" },
-    { label: "Odjavi se", href: "/auth/signout" },
+    { label: "Home", href: "/" },
+    {
+      label: "Sessions",
+      href: "/sessions",
+    },
+    currentUser && {
+      label: "Create session",
+      href: "/createsession",
+    },
+    currentUser && {
+      label: "My sessions",
+      href: "/mysessions",
+    },
+    !currentUser && { label: "Sign up", href: "/auth/signup" },
+    !currentUser && { label: "Sign in", href: "/auth/signin" },
+    currentUser && { label: "Sign out", href: "/auth/signout" },
   ]
     .filter((linkConfig) => linkConfig)
     .map(({ label, href }) => {
