@@ -101,10 +101,11 @@ export const getDetailSession = (sessionId, token) => {
   };
 };
 
-export const postTimeBlock = (timeBlockData, sessionId, token) => {
+export const postTimeBlock = (timeBlockData, sessionId, token, onSuccess) => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      const response = await axios.get(
+      console.log(timeBlockData, sessionId);
+      const response = await axios.post(
         `${keys.apiUrl}/api/sessions/${sessionId}/timeblocks`,
         { ...timeBlockData },
         {
@@ -119,6 +120,7 @@ export const postTimeBlock = (timeBlockData, sessionId, token) => {
     try {
       const detailSession = await sendRequest();
       dispatch(sessionsActions.setDetailSession(detailSession));
+      onSuccess(detailSession)
       dispatch(errorsActions.setErrors([]));
     } catch (error) {
       const errors = error.response.data.errors;

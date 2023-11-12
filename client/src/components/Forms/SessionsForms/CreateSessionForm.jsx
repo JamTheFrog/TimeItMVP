@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import FormErrors from "../../../shared/UIElements/FormErrors";
 import { postSession } from "../../../store/actions/sessions-actions";
+import { RxArrowRight } from "react-icons/rx";
 
 const CreateSessionForm = () => {
   const [enteredName, setEnteredName] = useState();
@@ -20,8 +21,8 @@ const CreateSessionForm = () => {
       description: enteredDescription,
     };
     dispatch(
-      postSession(sessionData, token, (userData) => {
-        history.push("/sessions");
+      postSession(sessionData, token, (sessionData) => {
+        history.push(`/sessions/${sessionData.id}/createtimeblock`);
       })
     );
   };
@@ -60,9 +61,9 @@ const CreateSessionForm = () => {
           </div>
           <button
             type="submit"
-            className="text-white mb-4 bg-primary hover:bg-primaryDark focus:ring-4 focus:outline-none focus:ring-primaryLight font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+            className="text-white mb-4 flex items-center gap-2 bg-primary hover:bg-primaryDark focus:ring-4 focus:outline-none focus:ring-primaryLight font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
           >
-            Create session
+            Next <RxArrowRight className="text-lg font-semibold" />
           </button>
         </form>
       </Card>

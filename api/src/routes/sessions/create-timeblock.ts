@@ -24,7 +24,7 @@ router.post(
       .isEmpty()
       .withMessage("Molimo vas unesite opis vaše sesije"),
     body("duration")
-      .isFloat({ min: 0, max: 100000 })
+      .isFloat({ min: 0, max: 1000000 })
       .withMessage(
         "Molimo vas unesite trajanje koje je u granici od 1 do 100.000"
       ),
@@ -40,6 +40,8 @@ router.post(
       throw new BadRequestError("Nismo uspjeli naći vaš profil");
 
     const existingSession = await Session.findById(req.params.sessionid);
+    
+    console.log(existingSession);
     
     if (!existingSession) throw new NotFoundError();
 

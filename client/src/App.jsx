@@ -12,6 +12,7 @@ import CreateSession from "./pages/sessions/CreateSession";
 import OwnerSessions from "./pages/sessions/OwnerSessions";
 import SessionDetail from "./pages/sessions/SessionDetail";
 import Sessions from "./pages/sessions/Sessions";
+import CreateTimeBlock from "./pages/sessions/CreateTimeBlock";
 
 function App() {
   const token = useSelector((state) => state.auth.token);
@@ -50,6 +51,9 @@ function App() {
           </Route>
           <Route exact path="/createsession">
             <CreateSession />
+          </Route>
+          <Route exact path="/sessions/:sessionid/createtimeblock">
+            <CreateTimeBlock />
           </Route>
           {/* ERROR ROUTES */}
           <Route path="*">
