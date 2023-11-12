@@ -4,11 +4,12 @@ import Signup from "./pages/auth/Signup";
 import Signin from "./pages/auth/Signin";
 import Signout from "./pages/auth/Signout";
 import NotFound from "./pages/error/NotFound";
+import MainNavigation from "./shared/Layout/Navigation/MainNavigation/MainNavigation";
 
 function App() {
   return (
     <Router>
-      {/* <MainNavigation /> */}
+      <MainNavigation />
       <div className="mt-[4rem] bg-white">
         <Switch>
           {/* MARKETING ROUTES */}
