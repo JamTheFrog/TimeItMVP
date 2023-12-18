@@ -16,9 +16,10 @@ function formatTime(seconds) {
 
 function TimeBlockItem({ timeBlock }) {
   return (
-    <div className="bg-primary rounded-lg shadow-lg p-2">
+    <div className="bg-primary rounded-lg shadow-lg p-2" >
       <h1 className="text-white font-semibold font-primaryFont">{timeBlock.title}</h1>
       <p className="text-primaryLight text-sm">{formatTime(timeBlock.duration)}</p>
+      <p className="text-primaryLight text-sm">{timeBlock.description}</p>
     </div>
   );
 }

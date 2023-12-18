@@ -67,9 +67,9 @@ function SessionTimer({ timeBlocks }) {
         Your session just begun
       </h1>
       {timeBlocks.map((block, index) => (
-        <Card
+        <div
           key={block.id}
-          className={`${index === activeIndex ? "bg-emerald-500" : "white"} mb-4`}
+          className={`p-4 rounded-lg shadow-md sm:p-8  ${index === activeIndex ? "bg-emerald-500" : "bg-white"} mb-4`}
         >
           <p
             className={`${
@@ -85,7 +85,14 @@ function SessionTimer({ timeBlocks }) {
           >
             Duration: {formatTime(block.duration)}
           </p>
-        </Card>
+          <p
+            className={`${
+              index === activeIndex ? "text-white" : "text-primary"
+            } font-semibold text-lg`}
+          >
+            Description: {block.description}
+          </p>
+        </div>
       ))}
       <div className="flex flex-col items-center">
         <p className="text-primary text-2xl  uppercase font-primaryFont font-semibold mb-4 mt-16">
