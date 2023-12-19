@@ -22,9 +22,9 @@ function SessionItem({ session }) {
       {location.pathname.includes("ownersessions") && (
         <Link
           className="text-darkHard mt-4 flex items-center gap-2 focus:ring-4 focus:outline-none focus:ring-primaryLight font-medium rounded-lg text-sm px-5 py-2.5  "
-          to={`/sessions/${session.id}/createtimeblock`}
+          to={`/sessions/${session.id}/editsession`}
         >
-          <span className="font-semibold ">Create time blocks</span> <RxArrowRight className="mt-0.5 text-lg"/>
+          <span className="font-semibold ">Edit session</span> <RxArrowRight className="mt-0.5 text-lg"/>
         </Link>
       )}
     </Card>

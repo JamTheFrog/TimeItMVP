@@ -32,9 +32,14 @@ app.use(express.json());
 const corsOptions = {
   origin: ["http://127.0.0.1:5173", "http://localhost"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  optionsSuccessStatus: 204, // No content response for preflight requests
-  credentials: true,
 };
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+})
 
 app.use(cors(corsOptions));
 app.use(currentUser);

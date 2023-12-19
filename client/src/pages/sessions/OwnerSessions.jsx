@@ -16,7 +16,6 @@ function OwnerSessions() {
       <h1 className="font-primaryFont text-center  uppercase text-darkHard lg:text-[180px] md:text-[120px] sm:text-[80px] text-[40px] lg:leading-[180px] md:leading-[120px] sm:leading-[90px] leading-[64.4px] mb-2 mt-4">
         YOUR <span className="text-primary">SESSIONS</span>
       </h1>
-
       <SessionsList />
     </div>
   );

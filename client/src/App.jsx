@@ -52,7 +52,7 @@ function App() {
           <Route exact path="/createsession">
             <CreateSession />
           </Route>
-          <Route exact path="/sessions/:sessionid/createtimeblock">
+          <Route exact path="/sessions/:sessionid/editsession">
             <CreateTimeBlock />
           </Route>
           {/* ERROR ROUTES */}
