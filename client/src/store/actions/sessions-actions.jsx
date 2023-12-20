@@ -128,3 +128,31 @@ export const postTimeBlock = (timeBlockData, sessionId, token, onSuccess) => {
     }
   };
 };
+
+export const patchTimeBlock = (timeBlockData, sessionId, token, onSuccess) => {
+  return async (dispatch) => {
+    const sendRequest = async () => {
+      console.log(timeBlockData, sessionId);
+      const response = await axios.patch(
+        `${keys.apiUrl}/api/sessions/${sessionId}/timeblocks`,
+        { ...timeBlockData },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    };
+    dispatch(errorsActions.setErrors([]));
+    try {
+      const detailSession = await sendRequest();
+      dispatch(sessionsActions.setDetailSession(detailSession));
+      onSuccess(detailSession)
+      dispatch(errorsActions.setErrors([]));
+    } catch (error) {
+      const errors = error.response.data.errors;
+      dispatch(errorsActions.setErrors(errors));
+    }
+  };
+}

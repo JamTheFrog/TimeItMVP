@@ -15,20 +15,34 @@ function formatTime(seconds) {
 }
 
 function TimeBlockItem({ timeBlock, setTimeBlockData }) {
-  const [showEditForm, setShowEditForm] = useState(false)
+  const [showEditForm, setShowEditForm] = useState(false);
 
   const editTimeblockHandler = () => {
-    setShowEditForm(true)
-    setTimeBlockData(timeBlock)
-  }
+    setShowEditForm(true);
+    setTimeBlockData(timeBlock);
+  };
   return (
-    <div className="bg-primary rounded-lg shadow-lg p-2" style={{ display: 'flex', flexDirection: 'column' }}>
-    <h1 className="text-white font-semibold font-primaryFont">{timeBlock.title}</h1>
-    <p className="text-primaryLight text-sm">{formatTime(timeBlock.duration)}</p>
-    <p className="text-primaryLight text-sm">{timeBlock.description}</p>
-    <button onClick={() => {editTimeblockHandler()}} className="mt-auto hover:px-2 text-primary bg-white px-4 border-[1px] hover:border-white hover:bg-primary hover:text-white hover:rounded-3xl hover:py-2 hover:font-bold transform transition-all duration-150 border-black">Edit timeblock</button>
-
-  </div>
+    <div
+      className="bg-primary rounded-lg shadow-lg p-2"
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <h1 className="text-white font-semibold font-primaryFont">
+        {timeBlock.title}
+      </h1>
+      <p className="text-primaryLight text-sm">
+        {formatTime(timeBlock.duration)}
+      </p>
+      <p className="text-primaryLight text-sm">{timeBlock.description}</p>
+      <button
+        onClick={() => {
+          editTimeblockHandler();
+        }}
+        className="mt-auto text-primary px-[6px] border-[1px] border-white bg-white  hover:bg-primary hover:text-white rounded-3xl hover:rounded-none transform transition-all duration-300 shadow-lg"
+        style={{ color: "transparent" }}
+      >
+        O
+      </button>
+    </div>
   );
 }
 

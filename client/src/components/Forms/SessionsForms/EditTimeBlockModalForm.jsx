@@ -2,34 +2,34 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { postTimeBlock } from "../../../store/actions/sessions-actions";
+import { patchTimeBlock } from "../../../store/actions/sessions-actions";
 import Card from "../../../shared/UIElements/Card";
 import FormErrors from "../../../shared/UIElements/FormErrors";
 
 const EditTimeBlockModalForm = ({ timeBlock, onClose }) => {
-  const [enteredTitle, setEnteredTitle] = useState("");
-  const [enteredDescription, setEnteredDescription] = useState("");
-  const [selectedHours, setSelectedHours] = useState(0);
-  const [selectedMinutes, setSelectedMinutes] = useState(0);
-  const [selectedSeconds, setSelectedSeconds] = useState(0);
+  const [enteredTitle, setEnteredTitle] = useState(timeBlock.title);
+  const [enteredDescription, setEnteredDescription] = useState(timeBlock.description);
+  const [selectedHours, setSelectedHours] = useState(Math.floor(timeBlock.duration/3600));
+  const [selectedMinutes, setSelectedMinutes] = useState((Math.floor(timeBlock.duration/60))%60);
+  const [selectedSeconds, setSelectedSeconds] = useState(timeBlock.duration%60);
 
-  console.log(timeBlock);
   const { sessionid } = useParams();
 
   const token = useSelector((state) => state.auth.token);
   const errors = useSelector((state) => state.errors.errors);
   const dispatch = useDispatch();
 
-  const createTimeBlockHandler = async (e) => {
+  const editTimeBlockHandler = async (e) => {
     e.preventDefault();
     const timeBlockData = {
+      id: timeBlock.id,
       title: enteredTitle,
       duration:
         +selectedHours * 3600 + +selectedMinutes * 60 + +selectedSeconds,
       description: enteredDescription,
     };
     dispatch(
-      postTimeBlock(timeBlockData, sessionid, token, (sessionData) => {
+      patchTimeBlock(timeBlockData, sessionid, token, (sessionData) => {
         onClose();
       })
     );
@@ -43,10 +43,10 @@ const EditTimeBlockModalForm = ({ timeBlock, onClose }) => {
         }
       >
         <h1 className="text-2xl text-center text-darkHard mb-6 font-medium">
-          Create Time Block
+          Edit Your Time Block
         </h1>
         <FormErrors errors={errors} />
-        <form onSubmit={createTimeBlockHandler}>
+        <form onSubmit={editTimeBlockHandler}>
           <div className="relative z-0 mb-6 w-full group">
             <input
               type="text"
@@ -133,6 +133,7 @@ const EditTimeBlockModalForm = ({ timeBlock, onClose }) => {
               type="text"
               className="w-full p-1 text-sm text-darkHard bg-transparent border rounded-lg h-40   focus:outline-none focus:ring-0 focus:border-primary"
               required
+              value={enteredDescription}
               onChange={(e) => setEnteredDescription(e.target.value)}
             ></textarea>
           </div>
@@ -141,7 +142,7 @@ const EditTimeBlockModalForm = ({ timeBlock, onClose }) => {
             type="submit"
             className="text-white bg-primary hover:bg-primaryDark focus:ring-4 focus:outline-none focus:ring-primaryLight font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
           >
-            Create Time Block
+            Save changes
           </button>
           <button
             type="button"
