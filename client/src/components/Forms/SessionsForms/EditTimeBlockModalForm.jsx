@@ -2,16 +2,26 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { patchTimeBlock } from "../../../store/actions/sessions-actions";
+import { deleteTimeBlock, patchTimeBlock } from "../../../store/actions/sessions-actions";
 import Card from "../../../shared/UIElements/Card";
 import FormErrors from "../../../shared/UIElements/FormErrors";
 
+
 const EditTimeBlockModalForm = ({ timeBlock, onClose }) => {
   const [enteredTitle, setEnteredTitle] = useState(timeBlock.title);
-  const [enteredDescription, setEnteredDescription] = useState(timeBlock.description);
-  const [selectedHours, setSelectedHours] = useState(Math.floor(timeBlock.duration/3600));
-  const [selectedMinutes, setSelectedMinutes] = useState((Math.floor(timeBlock.duration/60))%60);
-  const [selectedSeconds, setSelectedSeconds] = useState(timeBlock.duration%60);
+  const [enteredDescription, setEnteredDescription] = useState(
+    timeBlock.description
+  );
+  const [selectedHours, setSelectedHours] = useState(
+    Math.floor(timeBlock.duration / 3600)
+  );
+  const [selectedMinutes, setSelectedMinutes] = useState(
+    Math.floor(timeBlock.duration / 60) % 60
+  );
+  const [selectedSeconds, setSelectedSeconds] = useState(
+    timeBlock.duration % 60
+  );
+  const [submitType, setSubmitType] = useState("edit")
 
   const { sessionid } = useParams();
 
@@ -34,6 +44,14 @@ const EditTimeBlockModalForm = ({ timeBlock, onClose }) => {
       })
     );
   };
+  const deletTimeBlockHandler = async (e) => {
+    e.preventDefault()
+    dispatch(
+      deleteTimeBlock(timeBlock.id, sessionid, token, () => {
+        onClose()
+      })
+    )
+  }
 
   return (
     <div className="fixed top-0 left-0 z-40 h-[100vh] w-[100vw] bg-[rgba(0,0,0,0.4)] p-4">
@@ -46,7 +64,7 @@ const EditTimeBlockModalForm = ({ timeBlock, onClose }) => {
           Edit Your Time Block
         </h1>
         <FormErrors errors={errors} />
-        <form onSubmit={editTimeBlockHandler}>
+        <form onSubmit={submitType == "edit" ? editTimeBlockHandler : deletTimeBlockHandler}>
           <div className="relative z-0 mb-6 w-full group">
             <input
               type="text"
@@ -137,20 +155,27 @@ const EditTimeBlockModalForm = ({ timeBlock, onClose }) => {
               onChange={(e) => setEnteredDescription(e.target.value)}
             ></textarea>
           </div>
-
-          <button
-            type="submit"
-            className="text-white bg-primary hover:bg-primaryDark focus:ring-4 focus:outline-none focus:ring-primaryLight font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
-          >
-            Save changes
-          </button>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-primary font-medium text-sm w-full sm:w-auto px-5 py-2.5 text-center "
-          >
-            Close
-          </button>
+          <div className="flex justify-between">
+            <div>
+              <button
+                type="submit"
+                onClick={() => {setSubmitType("edit")}}
+                className="text-white bg-primary hover:bg-primaryDark focus:ring-4 focus:outline-none focus:ring-primaryLight font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+              >
+                Save changes
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="text-primary font-medium text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+              >
+                Close
+              </button>
+            </div>
+            <button type="submit" onClick={() => {setSubmitType("delete")}} className="text-white bg-primary hover:bg-primaryDark focus:ring-4 focus:outline-none focus:ring-primaryLight font-medium rounded-lg text-sm w-full w-auto px-5 py-2.5 text-center ">
+              Delete timeblock
+            </button>
+          </div>
         </form>
       </Card>
     </div>

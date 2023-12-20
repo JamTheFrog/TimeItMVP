@@ -26,6 +26,8 @@ import { showSessionsRouter } from "./routes/sessions/show-sessions";
 import { showSessionRouter } from "./routes/sessions/show-session";
 import { editTimeBlockRouter } from "./routes/sessions/update-timeblock";
 import { deleteSessionRouter } from "./routes/sessions/delete-session";
+import { deleteTimeBlockRouter } from "./routes/sessions/delete-timeblock";
+import { editSessionRouter } from "./routes/sessions/update-session";
 
 const app = express();
 app.set("trust proxy", true);
@@ -54,9 +56,11 @@ app.use(signoutRouter);
 
 //sessions related routes
 app.use(createSessionRouter);
-app.use(deleteSessionRouter)
+app.use(editSessionRouter);
+app.use(deleteSessionRouter);
 app.use(createTimeBlockRouter);
 app.use(editTimeBlockRouter);
+app.use(deleteTimeBlockRouter);
 app.use(showOwnerSessionsRouter);
 app.use(showSessionsRouter);
 app.use(showSessionRouter);

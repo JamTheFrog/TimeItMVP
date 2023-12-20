@@ -33,6 +33,36 @@ export const postSession = (sessionData, token, onSuccess) => {
   };
 };
 
+export const patchSession = (sessionData, sessionId, token, onSuccess) => {
+  return async (dispatch) => {
+    const sendRequest = async () => {
+      const response = await axios.patch(
+        `${keys.apiUrl}/api/sessions/${sessionId}`,
+        {
+          ...sessionData,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    };
+    dispatch(errorsActions.setErrors([]));
+
+    try {
+      const createdSession = await sendRequest();
+      dispatch(errorsActions.setErrors([]));
+      onSuccess(createdSession);
+    } catch (error) {
+      const errors = error.response.data.errors;
+
+      dispatch(errorsActions.setErrors(errors));
+    }
+  };
+};
+
 export const getSessions = () => {
   return async (dispatch) => {
     const sendRequest = async () => {
@@ -130,7 +160,6 @@ export const deleteSession = (sessionId, token, onSuccess) => {
 export const postTimeBlock = (timeBlockData, sessionId, token, onSuccess) => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      console.log(timeBlockData, sessionId);
       const response = await axios.post(
         `${keys.apiUrl}/api/sessions/${sessionId}/timeblocks`,
         { ...timeBlockData },
@@ -158,10 +187,35 @@ export const postTimeBlock = (timeBlockData, sessionId, token, onSuccess) => {
 export const patchTimeBlock = (timeBlockData, sessionId, token, onSuccess) => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      console.log(timeBlockData, sessionId);
       const response = await axios.patch(
         `${keys.apiUrl}/api/sessions/${sessionId}/timeblocks`,
         { ...timeBlockData },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    };
+    dispatch(errorsActions.setErrors([]));
+    try {
+      const detailSession = await sendRequest();
+      dispatch(sessionsActions.setDetailSession(detailSession));
+      onSuccess(detailSession)
+      dispatch(errorsActions.setErrors([]));
+    } catch (error) {
+      const errors = error.response.data.errors;
+      dispatch(errorsActions.setErrors(errors));
+    }
+  };
+}
+
+export const deleteTimeBlock = (timeBlockId, sessionId, token, onSuccess) => {
+  return async (dispatch) => {
+    const sendRequest = async () => {
+      const response = await axios.delete(
+        `${keys.apiUrl}/api/sessions/${sessionId}/${timeBlockId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

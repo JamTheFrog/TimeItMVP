@@ -24,9 +24,7 @@ router.patch(
       .withMessage("Please enter the description of your time block"),
     body("duration")
       .isFloat({ min: 0, max: 1000000 })
-      .withMessage(
-        "Please enter valid duration of your session"
-      ),
+      .withMessage("Please enter valid duration of your session"),
     check("sessionid").isMongoId().withMessage("Invalid ID"),
   ],
   validateRequest,
@@ -39,34 +37,36 @@ router.patch(
       throw new BadRequestError("We couldn't find your account");
 
     const existingSession = await Session.findById(req.params.sessionid);
-    
+
     console.log(existingSession);
-    
+
     if (!existingSession) throw new NotFoundError();
-    
 
-    if (existingSession.ownerId !== req.currentUser!.id) throw new NotAuthorizedError();
+    if (existingSession.ownerId !== req.currentUser!.id)
+      throw new NotAuthorizedError();
 
-      const existingTimeBlockIndex = existingSession.timeBlocks.findIndex(
-        (block) => block.id === id
-      );
-  
-      if (existingTimeBlockIndex === -1) throw new NotFoundError();
-      
-  
-      const timeBlock: TimeBlock = {
+    const existingTimeBlockIndex = existingSession.timeBlocks.findIndex(
+      (block) => block.id === id
+    );
+
+    if (existingTimeBlockIndex === -1) throw new NotFoundError();
+
+      existingSession.timeBlocks.splice(existingTimeBlockIndex, 1)
+
+      const timeBlock = {
         id,
         title,
         duration: +duration,
         description,
       };
-      
-      existingSession.timeBlocks[existingTimeBlockIndex] = timeBlock
-  
-      const latestSession = await existingSession.save();
-  
-      res.status(200).send(latestSession);
-    }
-  );
-  
-  export { router as editTimeBlockRouter };
+
+      existingSession.timeBlocks[existingTimeBlockIndex] = timeBlock;
+    
+
+    const latestSession = await existingSession.save();
+
+    res.status(200).send(latestSession);
+  }
+);
+
+export { router as editTimeBlockRouter };

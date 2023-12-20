@@ -25,11 +25,12 @@ function TimeBlocksList() {
     setTimeBlock(timeBlock);
   };
 
-  const editSessionHandler = () => {};
+  const editSessionHandler = () => {
+    history.push(`/editsession/${session.id}`)
+  };
 
   const deleteSessionHandler = () => {
     dispatch(deleteSession(session.id, token, () => {
-      console.log("called back");
       history.push("/sessions")
     }));
     
@@ -52,7 +53,7 @@ function TimeBlocksList() {
           session.timeBlocks.map((timeBlock) => {
             return (
               <TimeBlockItem
-                key={timeBlock}
+                key={timeBlock.id}
                 timeBlock={timeBlock}
                 setTimeBlockData={(timeblock) => {
                   setTimeBlockData(timeblock);
