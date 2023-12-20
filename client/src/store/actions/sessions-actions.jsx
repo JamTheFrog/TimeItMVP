@@ -101,6 +101,33 @@ export const getDetailSession = (sessionId, token) => {
   };
 };
 
+export const deleteSession = (sessionId, token) => {
+  return async (dispatch) => {
+    console.log("sending req");
+    console.log(sessionId);
+    const sendRequest = async () => {
+      const response = await axios.delete(
+        `${keys.apiUrl}/api/sessions/${sessionId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    };
+    dispatch(errorsActions.setErrors([]));
+    try {
+      const sessions = await sendRequest();
+      dispatch(sessionsActions.setSessions(sessions));
+      dispatch(errorsActions.setErrors([]));
+    } catch (error) {
+      const errors = error.response.data.errors;
+      dispatch(errorsActions.setErrors(errors));
+    }
+  };
+};
+
 export const postTimeBlock = (timeBlockData, sessionId, token, onSuccess) => {
   return async (dispatch) => {
     const sendRequest = async () => {
