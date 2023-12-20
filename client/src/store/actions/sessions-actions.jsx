@@ -101,10 +101,8 @@ export const getDetailSession = (sessionId, token) => {
   };
 };
 
-export const deleteSession = (sessionId, token) => {
+export const deleteSession = (sessionId, token, onSuccess) => {
   return async (dispatch) => {
-    console.log("sending req");
-    console.log(sessionId);
     const sendRequest = async () => {
       const response = await axios.delete(
         `${keys.apiUrl}/api/sessions/${sessionId}`,
@@ -125,6 +123,7 @@ export const deleteSession = (sessionId, token) => {
       const errors = error.response.data.errors;
       dispatch(errorsActions.setErrors(errors));
     }
+    onSuccess()
   };
 };
 

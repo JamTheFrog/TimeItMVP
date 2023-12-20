@@ -14,6 +14,7 @@ const CreateSessionForm = () => {
   const errors = useSelector((state) => state.errors.errors);
   const token = useSelector((state) => state.auth.token);
   const history = useHistory();
+
   const createSessionHandler = async (e) => {
     e.preventDefault();
     const sessionData = {
@@ -22,7 +23,7 @@ const CreateSessionForm = () => {
     };
     dispatch(
       postSession(sessionData, token, (sessionData) => {
-        history.push(`/sessions/${sessionData.id}/createtimeblock`);
+        history.push(`/sessions/${sessionData.id}/editsession`);
       })
     );
   };

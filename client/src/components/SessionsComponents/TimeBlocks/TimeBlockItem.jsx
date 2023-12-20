@@ -15,10 +15,8 @@ function formatTime(seconds) {
 }
 
 function TimeBlockItem({ timeBlock, setTimeBlockData }) {
-  const [showEditForm, setShowEditForm] = useState(false);
 
   const editTimeblockHandler = () => {
-    setShowEditForm(true);
     setTimeBlockData(timeBlock);
   };
   return (

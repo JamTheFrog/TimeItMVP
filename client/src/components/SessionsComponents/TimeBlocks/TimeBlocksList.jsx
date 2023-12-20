@@ -5,6 +5,7 @@ import TimeBlockItem from "./TimeBlockItem";
 import CreateTimeBlockModalForm from "../../Forms/SessionsForms/CreateTimeBlockModalForm";
 import EditTimeBlockModalForm from "../../Forms/SessionsForms/EditTimeBlockModalForm";
 import { deleteSession } from "../../../store/actions/sessions-actions";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function TimeBlocksList() {
   const [createTimeBlockFormIsShown, setCreateTimeBlockFormIsShown] =
@@ -17,6 +18,7 @@ function TimeBlocksList() {
   const token = useSelector((state) => state.auth.token);
 
   const dispatch = useDispatch();
+  const history = useHistory()
 
   const setTimeBlockData = (timeBlock) => {
     setEditTimeBlockFormIsShown(true);
@@ -26,8 +28,11 @@ function TimeBlocksList() {
   const editSessionHandler = () => {};
 
   const deleteSessionHandler = () => {
-    dispatch(deleteSession(session.id, token));
-    console.log("check");
+    dispatch(deleteSession(session.id, token, () => {
+      console.log("called back");
+      history.push("/sessions")
+    }));
+    
   };
   return (
     <>
