@@ -236,3 +236,4 @@ export const deleteTimeBlock = (timeBlockId, sessionId, token, onSuccess) => {
     }
   };
 }
+

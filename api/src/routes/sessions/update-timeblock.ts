@@ -5,7 +5,7 @@ import { validateRequest } from "../../middlewares/validate-request";
 import { User } from "../../models/user";
 import { NotAuthorizedError } from "../../errors/not-authorized";
 import { BadRequestError } from "../../errors/bad-request-error";
-import { Session, TimeBlock } from "../../models/session";
+import { Session } from "../../models/session";
 import { NotFoundError } from "../../errors/not-found-error";
 
 const router = express.Router();
@@ -45,13 +45,13 @@ router.patch(
     if (existingSession.ownerId !== req.currentUser!.id)
       throw new NotAuthorizedError();
 
+  
     const existingTimeBlockIndex = existingSession.timeBlocks.findIndex(
       (block) => block.id === id
     );
 
     if (existingTimeBlockIndex === -1) throw new NotFoundError();
 
-      existingSession.timeBlocks.splice(existingTimeBlockIndex, 1)
 
       const timeBlock = {
         id,
@@ -61,9 +61,9 @@ router.patch(
       };
 
       existingSession.timeBlocks[existingTimeBlockIndex] = timeBlock;
-    
 
     const latestSession = await existingSession.save();
+
 
     res.status(200).send(latestSession);
   }
